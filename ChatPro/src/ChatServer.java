@@ -24,6 +24,7 @@ public class ChatServer {
 			isStarted = true;
 		} catch (BindException e) {
 			System.out.println("端口使用中!");
+			System.out.println("请关闭后重新使用!");
 			System.exit(0);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -52,7 +53,7 @@ public class ChatServer {
 			this.s = s;
 			try {
 				dis = new DataInputStream(s.getInputStream());
-				isConnect = true;
+				Connect = true;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
