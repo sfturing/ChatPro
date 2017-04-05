@@ -45,6 +45,7 @@ public class ChatClient extends Frame {
 	public void connect(){
 		try {
 			s=new Socket("127.0.0.1",4444);
+			System.out.println("Connect!");
 			dos=new DataOutputStream(s.getOutputStream());
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
