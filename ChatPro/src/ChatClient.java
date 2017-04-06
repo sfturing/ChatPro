@@ -16,6 +16,7 @@ public class ChatClient extends Frame {
 	DataOutputStream dos = null;
 	TextField textField=new TextField();
 	TextArea textArea=new TextArea();
+	/*感觉自己仍然需要很多的努力*/
 	/**
 	 * @param args
 	 */

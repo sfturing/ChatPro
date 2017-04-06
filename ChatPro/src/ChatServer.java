@@ -1,14 +1,18 @@
+import java.awt.List;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ChatServer {
 	boolean isStarted = false;
 	ServerSocket ss = null;
 	Socket s = null;
+	ArrayList<Client> cliens = new ArrayList<Client>();
 
 	/**
 	 * @param args
@@ -35,6 +39,7 @@ public class ChatServer {
 				s = ss.accept();
 				System.out.println("A client connected");
 				Client c = new Client(s);
+				cliens.add(c);
 				new Thread(c).start();
 
 			} catch (IOException e) {
@@ -43,39 +48,54 @@ public class ChatServer {
 		}
 
 	}
-
+	
+	
 	class Client implements Runnable {
 		private Socket s = null;
-		private DataInputStream dis = null;	;
+		private DataInputStream dis = null;	
+		private DataOutputStream dos = null;
 		private boolean isConnect = false;
 
 		public Client(Socket s) {
 			this.s = s;
 			try {
 				dis = new DataInputStream(s.getInputStream());
-				Connect = true;
+				dos=new DataOutputStream(s.getOutputStream());
+				isConnect = true;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-
+ 
 		public void run() {
 			try {
 				while (isConnect) {
 					String str = dis.readUTF();
 					System.out.println(str);
+					for(int i=0;i<cliens.size();i++){
+						cliens.get(i).sendMessage(str);
+					}
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
 				try {
-					dis.close();
-					s.close();
+					if(dis!=null) dis.close();
+					if(dos!=null) dos.close();
+					if(s!=null) s.close();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 			}
 
+		}
+		public void sendMessage(String str){
+			try {
+				dos.writeUTF(str);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }
