@@ -163,7 +163,7 @@ public class ChatClient extends Frame {
 		sendMessage(accStr);
 
 		textField.setText("");
-		// System.out.println(accStr);
+		System.out.println(accStr);
 	}
 
 	public void sendMessage(String str) {

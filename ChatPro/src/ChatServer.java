@@ -14,6 +14,7 @@ public class ChatServer {
 	ServerSocket ss = null;
 	Socket s = null;
 	// 客户端的集合
+	// 客户端的集合
 	ArrayList<Client> cliens = new ArrayList<Client>();
 
 	/**
